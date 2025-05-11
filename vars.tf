@@ -16,6 +16,12 @@ variable "node-count" {
   default = 1
 }
 
+variable "node-disk-size" {
+  description = "Disk size in GB"
+  type        = number
+  default     = 20
+}
+
 variable "node-ssh-username" {
   description = "User created for SSH access"
   type        = string

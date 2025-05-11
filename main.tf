@@ -41,3 +41,17 @@ resource "libvirt_cloudinit_disk" "cloud-init" {
     }
   )
 }
+
+resource "libvirt_volume" "node-disk" {
+  count = var.node-count
+
+  name           = "${var.project-name}-node-${count.index}"
+  base_volume_id = libvirt_volume.ubuntu-2404-noble.id
+  size           = var.node-disk-size * 1024 * 1024 * 1024
+
+  lifecycle {
+    replace_triggered_by = [
+      libvirt_cloudinit_disk.cloud-init
+    ]
+  }
+}
