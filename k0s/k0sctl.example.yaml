@@ -1,0 +1,27 @@
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: k0s-libvirt-cluster
+spec:
+  k0s:
+    version: v1.32.4+k0s.0
+    config:
+      apiVersion: k0s.k0sproject.io/v1beta1
+      kind: ClusterConfig
+      metadata:
+        name: k0s-libvirt-cluster
+      spec:
+        api:
+          address: 10.10.0.2
+        telemetry:
+          enabled: false
+
+  hosts:
+    - role: controller+worker
+      # Required to schedule workload on controller+worker mode
+      noTaints: true
+      openSSH:
+        address: 10.10.0.2
+    - role: worker
+      openSSH:
+        address: 10.10.0.3

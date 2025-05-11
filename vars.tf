@@ -13,7 +13,7 @@ variable "node-os-image" {
 
 variable "node-count" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "libvirt-network-cidr" {

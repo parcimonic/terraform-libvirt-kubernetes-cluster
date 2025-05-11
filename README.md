@@ -10,6 +10,18 @@ Host system requirements:
 - [k0sctl](https://github.com/k0sproject/k0sctl)
 - Enough resources (CPU, memory, disk space) to run the desired amount of guests
 
+## Usage
+
+1. Create a `tfvars` file with the SSH key definition and additional non-default values if required.
+1. `terraform init`
+1. `terraform apply`
+1. Check the `k0sctl.example.yaml` file, use it to customize whatever is required (e.g. amount of hosts).
+1. `k0sctl apply --config k0s/k0sctl.yaml` (or just use the example file).
+1. `k0sctl kubeconfig > kubeconfig`
+1. `export KUBECONFIG=./kubeconfig` (or check [this answer](https://stackoverflow.com/questions/46184125/how-to-merge-kubectl-config-file-with-kube-config/46184649#46184649)).
+1. Play with the cluster.
+1. `terraform destroy` once you're done playing.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -41,7 +53,7 @@ Host system requirements:
 |------|-------------|------|---------|:--------:|
 | apt-packages | List of APT packages to install via cloud-init | `list(string)` | `[]` | no |
 | libvirt-network-cidr | Network to be created in libvirt using CIDR notation | `string` | `"10.10.0.0/24"` | no |
-| node-count | n/a | `number` | `1` | no |
+| node-count | n/a | `number` | `2` | no |
 | node-cpu | CPU allocated to each node | `number` | `1` | no |
 | node-disk-size | Disk size in GB | `number` | `20` | no |
 | node-memory | Memory allocated to each node in MiB | `number` | `2048` | no |
