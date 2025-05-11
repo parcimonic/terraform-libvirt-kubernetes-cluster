@@ -16,6 +16,12 @@ variable "node-count" {
   default = 1
 }
 
+variable "libvirt-network-cidr" {
+  description = "Network to be created in libvirt using CIDR notation"
+  type        = string
+  default     = "10.10.0.0/24"
+}
+
 variable "node-disk-size" {
   description = "Disk size in GB"
   type        = number

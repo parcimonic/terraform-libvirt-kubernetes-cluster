@@ -55,3 +55,19 @@ resource "libvirt_volume" "node-disk" {
     ]
   }
 }
+
+###
+### Node network
+###
+resource "libvirt_network" "k8s-nodes" {
+  name      = "${var.project-name}-nodes"
+  mode      = "nat"
+  domain    = "${var.project-name}.local"
+  addresses = [var.libvirt-network-cidr]
+  autostart = true
+
+  dns {
+    enabled    = true
+    local_only = true
+  }
+}
