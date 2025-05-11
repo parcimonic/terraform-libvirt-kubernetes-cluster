@@ -1,5 +1,15 @@
 # terraform-libvirt-kubernetes-cluster
 
+Use this to quickly spin up a Kubernetes cluster using libvirt, Terraform and k0s.
+
+Host system requirements:
+
+- Terraform
+- Libvirt with QEMU driver
+  - Test with `virt-host-validate qemu`
+- [k0sctl](https://github.com/k0sproject/k0sctl)
+- Enough resources (CPU, memory, disk space) to run the desired amount of guests
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
