@@ -16,3 +16,12 @@ terraform {
 provider "libvirt" {
   uri = "qemu:///system"
 }
+
+###
+### Volumes used by nodes
+###
+resource "libvirt_volume" "ubuntu-2404-noble" {
+  name   = "${var.project-name}-ubuntu-2404-cloudimg.img"
+  source = var.node-os-image
+  format = "qcow2"
+}
