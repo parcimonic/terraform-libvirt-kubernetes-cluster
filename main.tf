@@ -71,3 +71,37 @@ resource "libvirt_network" "k8s-nodes" {
     local_only = true
   }
 }
+
+###
+### Node definition
+###
+resource "libvirt_domain" "k8s-nodes" {
+  count = var.node-count
+
+  name      = "${var.project-name}-node-${count.index}"
+  vcpu      = var.node-cpu
+  memory    = var.node-memory
+  running   = true
+  autostart = false
+  cloudinit = libvirt_cloudinit_disk.cloud-init[count.index].id
+
+  cpu {
+    mode = "host-passthrough"
+  }
+  disk {
+    volume_id = libvirt_volume.node-disk[count.index].id
+    scsi      = true
+  }
+  network_interface {
+    network_id     = libvirt_network.k8s-nodes.id
+    hostname       = "${var.project-name}-node-${count.index}"
+    addresses      = [cidrhost(var.libvirt-network-cidr, count.index + 2)]
+    wait_for_lease = true
+  }
+
+  lifecycle {
+    replace_triggered_by = [
+      libvirt_cloudinit_disk.cloud-init
+    ]
+  }
+}

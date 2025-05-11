@@ -28,6 +28,18 @@ variable "node-disk-size" {
   default     = 20
 }
 
+variable "node-cpu" {
+  description = "CPU allocated to each node"
+  type        = number
+  default     = 1
+}
+
+variable "node-memory" {
+  description = "Memory allocated to each node in MiB"
+  type        = number
+  default     = 2048
+}
+
 variable "node-ssh-username" {
   description = "User created for SSH access"
   type        = string
