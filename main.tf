@@ -25,3 +25,19 @@ resource "libvirt_volume" "ubuntu-2404-noble" {
   source = var.node-os-image
   format = "qcow2"
 }
+
+resource "libvirt_cloudinit_disk" "cloud-init" {
+  count = var.node-count
+
+  name           = "${var.project-name}-cloud-init.iso"
+  network_config = file("${path.module}/cloud-init/network_config.cfg")
+  user_data = templatefile(
+    "${path.module}/cloud-init/user_data.cfg",
+    {
+      apt-packages = var.apt-packages
+      hostname     = "${var.project-name}-node-${count.index}"
+      ssh-key      = var.node-ssh-public-key
+      username     = var.node-ssh-username
+    }
+  )
+}
