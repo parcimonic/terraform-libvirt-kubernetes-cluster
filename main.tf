@@ -29,7 +29,7 @@ resource "libvirt_volume" "ubuntu-2404-noble" {
 resource "libvirt_cloudinit_disk" "cloud-init" {
   count = var.node-count
 
-  name           = "${var.project-name}-cloud-init.iso"
+  name           = "${var.project-name}-cloud-init-${count.index}.iso"
   network_config = file("${path.module}/cloud-init/network_config.cfg")
   user_data = templatefile(
     "${path.module}/cloud-init/user_data.cfg",
